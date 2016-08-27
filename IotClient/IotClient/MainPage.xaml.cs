@@ -33,9 +33,9 @@ namespace IotClient
         private RegistryManager registryManager;
         private DeviceClient deviceClient;
         private string iotHubUri = "{iot hub hostname}";
-        private string deviceKey = "{device key}";
+       // private string deviceKey = "{device key}";
         private string deviceId = "mydevice";
-        private string connectionString = "{iothub connection string}";
+       // private string connectionString = "{iothub connection string}";
 
         public MainPage()
         {
@@ -46,7 +46,7 @@ namespace IotClient
         {
             double avgWindSpeed = 10; // m/s
             Random rand = new Random();
-            deviceKey = txtDeviceKey.Text;
+            String deviceKey = txtDeviceKey.Text;
 
             while (true)
             {
@@ -54,7 +54,7 @@ namespace IotClient
 
                 var telemetryDataPoint = new
                 {
-                    deviceId = TxtDeviceId.Text,
+                    deviceId = txtSourceDeviceId.Text,
                     windSpeed = currentWindSpeed
                 };
                 var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
@@ -95,16 +95,24 @@ namespace IotClient
 
         private void OnNewDeviceBtnClick(object sender, RoutedEventArgs e)
         {
-            connectionString = txtConnectionString.Text;
+            String connectionString = txtConnectionString.Text.Trim(); ;
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
-            AddDeviceAsync(TxtDeviceId.Text);
+            AddDeviceAsync(txtNewDeviceId.Text);
         }
 
         private void bntSendMessage_Click(object sender, RoutedEventArgs e)
         {
-            iotHubUri = txtHubUri.Text;
-            deviceKey = txtDeviceKey.Text;
-            deviceId = TxtDeviceId.Text;
+           String iotHubUri = txtHubUri.Text.Trim();
+            if (String.IsNullOrWhiteSpace(iotHubUri))
+                AppendToConsole("Invalid Hub URI");
+           String deviceKey = txtDeviceKey.Text.Trim();
+            if (String.IsNullOrWhiteSpace(deviceKey))
+                AppendToConsole("Invalid Device Key");
+
+            String deviceId = txtSourceDeviceId.Text.Trim();
+            if (String.IsNullOrWhiteSpace(deviceId))
+                AppendToConsole("Invalid DeviceID");
+
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey));
             SendDeviceToCloudMessagesAsync();
 

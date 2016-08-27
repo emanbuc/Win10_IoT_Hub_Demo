@@ -18,34 +18,41 @@
                         <TextBlock Text="Hub Owner Connection String" HorizontalAlignment="Left" Margin="20"/>
                         <TextBox Name="txtConnectionString" />
                         <TextBlock Text="Device ID"/>
-                        <TextBox Name="TxtDeviceId"/>
+                        <TextBox Name="txtNewDeviceId"/>
                         <Button Content="CreateDevice" Click="OnNewDeviceBtnClick" />
-                        <TextBlock Text="Content of pivot item 1."/>
                     </StackPanel>
 
                 </PivotItem>
                 <PivotItem Header="Sensor Simulation">
                     <StackPanel>
                         <!--Pivot content goes here-->
-                        <TextBlock Text="Content of pivot item 2."/>
-                        <TextBlock Text="Content of pivot item 3."/>
+                        <TextBlock Text="Input HUB uri, device Id and Device Key"/>
                         <TextBlock Text="Hub URI"/>
                         <TextBox Name="txtHubUri"/>
-                        <TextBlock Text="Device Key"/>
+                        <TextBlock Text="Source Device ID"/>
+                        <TextBox Name="txtSourceDeviceId"/>                        
+                        <TextBlock Text="Source Device Key"/>
                         <TextBox Name="txtDeviceKey"/>
-                        <Button Name="bntSendMessage" Content="Start send data to Hub" Click="bntSendMessage_Click"/>
+                        <Button Name="bntSendMessage" Content="Start send simulated sensor data to Hub" Click="bntSendMessage_Click"/>
                     </StackPanel>
 
                 </PivotItem>
-                <PivotItem Header="Pivot Item 3">
-                    <!--Pivot content goes here-->
-
+                <PivotItem Header="Input command Monitor">
+                    <StackPanel>
+                        <TextBlock Text="Commands from hub to this device"/>
+                        <TextBlock Text="Not implemented yet"/>
+                    </StackPanel>
                 </PivotItem>
             </Pivot>
 
 
             <TextBlock Text="Debug console" TextAlignment="Center" Margin="30"/>
-            <TextBox Name="MessageTextBox" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <TextBox Name="MessageTextBox" 
+                     Height="200"
+                     AcceptsReturn="True" 
+                     IsReadOnly="True" 
+                     TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                     ScrollViewer.VerticalScrollMode="Enabled"/>
         </StackPanel>
     </Grid>
 </Page>
