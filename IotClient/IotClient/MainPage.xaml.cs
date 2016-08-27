@@ -32,9 +32,12 @@ namespace IotClient
     {
         private RegistryManager registryManager;
         private DeviceClient deviceClient;
-        private string iotHubUri = "{iot hub hostname}";
+
+        private Boolean sensorSimulatorActive;
+
+       // private string iotHubUri = "{iot hub hostname}";
        // private string deviceKey = "{device key}";
-        private string deviceId = "mydevice";
+       // private string deviceId = "mydevice";
        // private string connectionString = "{iothub connection string}";
 
         public MainPage()
@@ -48,23 +51,30 @@ namespace IotClient
             Random rand = new Random();
             String deviceKey = txtDeviceKey.Text;
 
-            while (true)
+            while (sensorSimulatorActive)
             {
-                double currentWindSpeed = avgWindSpeed + rand.NextDouble() * 4 - 2;
-
-                var telemetryDataPoint = new
+                try
                 {
-                    deviceId = txtSourceDeviceId.Text,
-                    windSpeed = currentWindSpeed
-                };
-                var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
-                var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageString));
+                    double currentWindSpeed = avgWindSpeed + rand.NextDouble() * 4 - 2;
 
-                await deviceClient.SendEventAsync(message);
-                AppendToConsole(String.Format("{0} > Sending message: {1}", DateTime.Now, messageString));
+                    var telemetryDataPoint = new
+                    {
+                        deviceId = txtSourceDeviceId.Text,
+                        windSpeed = currentWindSpeed
+                    };
+                    var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+                    var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageString));
+
+                    await deviceClient.SendEventAsync(message);
+                    AppendToConsole(String.Format("{0} > Sending message: {1}", DateTime.Now, messageString));
+                }
+                catch (Exception ex)
+                {
+                    AppendToConsole(String.Format("{0} > Error sending message: {1}", DateTime.Now, ex.Message));
+                }
                 
 
-                Task.Delay(1000).Wait();
+                Task.Delay(5000).Wait();
             }
         }
 
@@ -100,7 +110,7 @@ namespace IotClient
             AddDeviceAsync(txtNewDeviceId.Text);
         }
 
-        private void bntSendMessage_Click(object sender, RoutedEventArgs e)
+        private void btnStartSensorSimulator_Click(object sender, RoutedEventArgs e)
         {
            String iotHubUri = txtHubUri.Text.Trim();
             if (String.IsNullOrWhiteSpace(iotHubUri))
@@ -114,8 +124,21 @@ namespace IotClient
                 AppendToConsole("Invalid DeviceID");
 
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey(deviceId, deviceKey));
+            sensorSimulatorActive = true;
+            bntStartSensorSimulator.IsEnabled = false;
+            btnStopSensorSimulator.IsEnabled = true;
+            txtSensorSimulatorStatus.Text = "Enabled";
             SendDeviceToCloudMessagesAsync();
 
+        }
+
+        private void bntStopSensorSimulator_Click(object sender, RoutedEventArgs e)
+        {
+            sensorSimulatorActive = false;
+            sensorSimulatorActive = true;
+            txtSensorSimulatorStatus.Text = "Disabled";
+            bntStartSensorSimulator.IsEnabled = true;
+            btnStopSensorSimulator.IsEnabled = false;
         }
     }
 }

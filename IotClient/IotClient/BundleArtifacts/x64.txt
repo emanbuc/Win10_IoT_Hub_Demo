@@ -1,0 +1,2 @@
+MainPackage=C:\Users\devuser\Documents\dev\Win10_IoT_Hub_Demo\IotClient\IotClient\bin\x64\Debug\IotClient_1.0.0.0_x64_Debug.appx
+SymbolPackage=C:\Users\devuser\Documents\dev\Win10_IoT_Hub_Demo\IotClient\IotClient\AppPackages\IotClient_1.0.0.0_Debug_Test\IotClient_1.0.0.0_x64_Debug.appxsym

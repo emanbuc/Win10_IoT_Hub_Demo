@@ -6,9 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
         <StackPanel x:Name="MyStackPanel">
             <Pivot x:Name="rootPivot" Title="Pivot Title">
                 <PivotItem Header="Register Device">
@@ -30,11 +27,16 @@
                         <TextBlock Text="Hub URI"/>
                         <TextBox Name="txtHubUri"/>
                         <TextBlock Text="Source Device ID"/>
-                        <TextBox Name="txtSourceDeviceId"/>                        
+                        <TextBox Name="txtSourceDeviceId"/>
                         <TextBlock Text="Source Device Key"/>
                         <TextBox Name="txtDeviceKey"/>
-                        <Button Name="bntSendMessage" Content="Start send simulated sensor data to Hub" Click="bntSendMessage_Click"/>
-                    </StackPanel>
+                        <TextBlock Text="Sensor Simulator" Margin="20 0 0 10"/>
+                        
+                        <TextBlock Text="Status:"/>
+                        <TextBlock Name="txtSensorSimulatorStatus" Text="N/A"/>
+                        <Button Name="bntStartSensorSimulator" Content="Start Sensor Simulator" Click="btnStartSensorSimulator_Click"/>
+                        <Button Name="btnStopSensorSimulator" Content="Stop Sensor Simulator" Click="bntStopSensorSimulator_Click"/>
+                </StackPanel>
 
                 </PivotItem>
                 <PivotItem Header="Input command Monitor">
@@ -54,5 +56,4 @@
                      TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Visible" 
                      ScrollViewer.VerticalScrollMode="Enabled"/>
         </StackPanel>
-    </Grid>
 </Page>
