@@ -8,18 +8,42 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
         <StackPanel x:Name="MyStackPanel">
-            <TextBlock Text="Register This device" TextAlignment="Center" Margin="30" FontSize="34"/>
-            <TextBlock Text="Hub Owner Connection String" HorizontalAlignment="Left" Margin="20"/>
-            <TextBox Name="txtConnectionString" />
-            <TextBlock Text="Device ID"/>
-            <TextBox Name="TxtDeviceId"/>
-            <Button Content="CreateDevice" Click="OnNewDeviceBtnClick" />
-            <TextBlock Text="Hub URI"/>
-            <TextBox Name="txtHubUri"/>            
-            <TextBlock Text="Device Key"/>
-            <TextBox Name="txtDeviceKey"/>
-            <Button Name="bntSendMessage" Content="Start send data to Hub" Click="bntSendMessage_Click"/>
+            <Pivot x:Name="rootPivot" Title="Pivot Title">
+                <PivotItem Header="Register Device">
+                    <StackPanel>
+                        <!--Pivot content goes here-->
+                        <TextBlock Text="Register This device" TextAlignment="Center" Margin="30" FontSize="34"/>
+                        <TextBlock Text="Hub Owner Connection String" HorizontalAlignment="Left" Margin="20"/>
+                        <TextBox Name="txtConnectionString" />
+                        <TextBlock Text="Device ID"/>
+                        <TextBox Name="TxtDeviceId"/>
+                        <Button Content="CreateDevice" Click="OnNewDeviceBtnClick" />
+                        <TextBlock Text="Content of pivot item 1."/>
+                    </StackPanel>
+
+                </PivotItem>
+                <PivotItem Header="Sensor Simulation">
+                    <StackPanel>
+                        <!--Pivot content goes here-->
+                        <TextBlock Text="Content of pivot item 2."/>
+                        <TextBlock Text="Content of pivot item 3."/>
+                        <TextBlock Text="Hub URI"/>
+                        <TextBox Name="txtHubUri"/>
+                        <TextBlock Text="Device Key"/>
+                        <TextBox Name="txtDeviceKey"/>
+                        <Button Name="bntSendMessage" Content="Start send data to Hub" Click="bntSendMessage_Click"/>
+                    </StackPanel>
+
+                </PivotItem>
+                <PivotItem Header="Pivot Item 3">
+                    <!--Pivot content goes here-->
+
+                </PivotItem>
+            </Pivot>
+
+
             <TextBlock Text="Debug console" TextAlignment="Center" Margin="30"/>
             <TextBox Name="MessageTextBox" AcceptsReturn="True" TextWrapping="Wrap"/>
         </StackPanel>
